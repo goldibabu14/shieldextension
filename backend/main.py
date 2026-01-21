@@ -1,4 +1,5 @@
 import os
+from socket import socket
 import psycopg2
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
@@ -14,7 +15,11 @@ class SessionIn(BaseModel):
     auth_token: str
 
 def get_connection():
-    return psycopg2.connect(DATABASE_URL)
+    return psycopg2.connect(
+        DATABASE_URL,
+        sslmode="require",
+        hostaddr=socket.gethostbyname("db.plhvmnbrplobjeokdamh.supabase.co")
+    )
 
 @app.post("/add")
 def add_session(data: SessionIn):
