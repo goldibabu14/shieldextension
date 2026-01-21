@@ -18,7 +18,6 @@ def get_connection():
     return psycopg2.connect(
         DATABASE_URL,
         sslmode="require",
-        hostaddr=socket.gethostbyname("db.plhvmnbrplobjeokdamh.supabase.co")
     )
 
 @app.post("/add")
