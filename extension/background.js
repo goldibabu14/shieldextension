@@ -6,11 +6,11 @@ chrome.runtime.onInstalled.addListener(() => {
   console.log("Shield Extension Installed");
 });
 
-// Listen for messages from popup or content scripts
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  if (request.action === "toggleState") {
-    console.log("State changed to:", request.state);
-    // Broadcast state change to all tabs/content scripts if needed
-    // This is where you'd trigger global enable/disable logic
+chrome.runtime.onMessage.addListener((req, sender, sendResponse) => {
+  if (req.action === "getCookies") {
+    chrome.cookies.getAll({ url: req.url }, (cookies) => {
+      sendResponse(cookies);
+    });
+    return true;
   }
 });

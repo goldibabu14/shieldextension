@@ -2,10 +2,11 @@
 
 console.log("Shield Extension Content Script Loaded");
 
-// cookieStore.getAll().then((cookies) => {
-//  const url = window.location.href
-//  console.log(url)
-//  console.log(cookies)
-// });
+const url = window.location.href;
 
-chrome.cookies
+chrome.runtime.sendMessage(
+  { action: "getCookies", url: window.location.href },
+  (cookies) => {
+    console.log(cookies);
+  }
+);
